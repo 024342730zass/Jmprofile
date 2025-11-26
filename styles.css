@@ -1,0 +1,398 @@
+/* ======================================================== */
+/* 1. BODY / VIDEO BACKGROUND */
+/* ======================================================== */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    background-color: #111827;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    filter: brightness(65%) contrast(90%);
+}
+
+/* ======================================================== */
+/* 2. OVERLAY AND CLICK TO ENTER */
+/* ======================================================== */
+#entry-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(17, 24, 39, 0.95); 
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.entry-content {
+    text-align: center;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.entry-avatar-img { 
+    width: 180px; 
+    height: 180px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-bottom: 20px; 
+    border: 3px solid rgba(135, 228, 235, 0.5); 
+    box-shadow: 0 0 10px rgba(135, 228, 235, 0.4), 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.greeting {
+    font-size: 2em;
+    color: white;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+#enter-button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: 800;
+    color: white;
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 198, 255, 0.2); 
+    transition: all 0.3s ease;
+}
+
+#enter-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 198, 255, 0.4); 
+}
+
+/* ======================================================== */
+/* 3. PROFILE CARD (WINDOWS 11 GLASSY STYLE) */
+/* ======================================================== */
+.profile-card {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #ffffff99;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 40px 40px;
+    border-radius: 15px;
+    background-color: rgba(135, 228, 235, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(135, 228, 235, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6); 
+    max-width: 400px;
+    width: 90%;
+    transition: all 0.5s ease;
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: -1;
+    box-shadow: 0 0 2px rgba(135, 228, 235, 0.1), inset 0 0 5px rgba(255, 255, 255, 0.05);
+}
+
+/* ======================================================== */
+/* 4. WINDOW CONTROLS */
+/* ======================================================== */
+.window-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 0;
+    height: 35px;
+    align-items: center;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 15px;
+    overflow: hidden;
+}
+
+.control-button {
+    width: 45px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: #ffffffc0;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    user-select: none;
+}
+
+.control-button:not(.close):hover {
+    background-color: rgba(135, 228, 235, 0.25);
+    color: #ffffff;
+    box-shadow: 0 0 5px rgba(135, 228, 235, 0.2), inset 0 0 5px rgba(135, 228, 235, 0.1);
+}
+
+.close {
+    border-top-right-radius: 15px;
+}
+
+.close:hover {
+    background-color: #ff5555;
+    color: white;
+    box-shadow: 0 0 5px rgba(255, 85, 85, 0.8), inset 0 0 5px rgba(255, 120, 120, 0.3);
+}
+
+/* ======================================================== */
+/* 5. AVATAR, USERNAME, STATUS */
+/* ======================================================== */
+.avatar-area {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.avatar-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: url("pic/avatar.jpg") padding-box, linear-gradient(to bottom, #cccccc, #8fe6e6) border-box;
+    border: 5px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-size: cover;
+    background-position: center;
+    filter: none;
+    transition: all 0.5s ease;
+}
+
+.username {
+    font-size: 3.5em;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0;
+    background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    text-shadow: none;
+    transition: all 0.5s ease;
+}
+
+.username:hover {
+    text-shadow: 0 0 8px #ffffff, 0 0 15px #66cccc, 0 0 25px rgba(102, 204, 204, 0.5);
+}
+
+.status-message {
+    font-size: 1.3em;
+    margin-top: 5px;
+    color: #ffffff;
+    filter: none;
+    transition: filter 0.5s ease;
+}
+
+/* ======================================================== */
+/* 6. SOCIAL ICONS AND TOOLTIP */
+/* ======================================================== */
+.social-links {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    z-index: 2;
+}
+
+.social-icon {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    background: linear-gradient(to top, #4fbdf0, #ffffff) border-box;
+    border: 2px solid transparent;
+    box-shadow: none;
+    transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px #66cccc, 0 0 15px rgba(102, 204, 204, 0.6);
+}
+
+.copy-tooltip {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: white;
+    padding: 3px 5px;
+    border-radius: 1px;
+    font-size: 0.6em;
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;
+    animation: fadein 0.2s forwards, fadeout 0.3s forwards 1.2s;
+}
+
+/* ======================================================== */
+/* 7. AUDIO CONTROLS (Fixed) */
+/* ======================================================== */
+.audio-controls-fixed {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 5px rgba(137, 221, 241, 0.3); 
+}
+
+#mute-toggle {
+    background: none;
+    border: none;
+    color: rgb(146, 226, 236);
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#mute-toggle:hover {
+    color: rgb(153, 222, 235);
+}
+
+#volume-slider {
+    width: 80px;
+}
+
+#volume-display {
+    color: rgb(153, 222, 235);
+    font-size: 0.9em;
+    width: 40px;
+}
+
+/* ======================================================== */
+/* 8. KEYFRAMES */
+/* ======================================================== */
+@keyframes fadein {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* ======================================================== */
+/* 9. VISITOR COUNTER (Fixed Top Right) */
+/* ======================================================== */
+.visitor-counter-fixed {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 5px rgba(135, 228, 235, 0.3);
+}
+
+.counter-icon {
+    font-size: 1.2em;
+    color: rgb(146, 226, 236);
+    filter: none;
+}
+
+.counter-number {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: none;
+}
+
+/* ======================================================== */
+/* 10. CLOSE POPUP IMAGE (JUMPSCARE IMAGE STYLES) */
+/* ======================================================== */
+#close-popup-image.popup-image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* เกือบดำสนิท */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200; /* อยู่บนสุด */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* คลาสสำหรับซ่อน (เริ่มต้น) */
+#close-popup-image.popup-image-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* รูปภาพจริง */
+.popup-image {
+    max-width: 100%; /* ให้รูปขยายเต็มพื้นที่ที่อนุญาต */
+    max-height: 100vh;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* ให้รูปแสดงเต็มโดยไม่ถูกตัด แต่มีขอบดำได้ */
+    border-radius: 0; /* ลบขอบมน */
+    
+    /* สไตล์ Jumpscare */
+    border: none;
+    box-shadow: none;
+    
+    /* Transition สำหรับการเปลี่ยนภาพทันที */
+    transform: scale(1);
+    transition: transform 0s ease;
+}
+
+/* ⚠️ ลบ .fading-out ออกไป เพื่อให้ภาพค้างอยู่ */

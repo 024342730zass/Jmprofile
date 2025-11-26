@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Jaomaew Profile </title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    
+    <div id="entry-overlay">
+        <div class="entry-content">
+            <img src="pic/furina.gif" alt="Profile Avatar" class="entry-avatar-img">
+            <p class="greeting">Welcome to Jaomaew's Profile</p>
+            <button id="enter-button">
+                CLICK TO ENTER
+            </button>
+        </div>
+    </div>
+
+    <video muted loop id="video-background" class="background-image">
+        <source src="pic/bg3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="audio-controls-fixed">
+        <button id="mute-toggle"><i class="fas fa-volume-off"></i></button>
+        <input type="range" id="volume-slider" min="0" max="100" value="10">
+        <span id="volume-display">10%</span>
+    </div>
+    
+    <div class="visitor-counter-fixed">
+        <i class="fas fa-eye counter-icon"></i>
+        <span class="counter-number">1,234</span>
+    </div>
+
+    <div class="profile-card">
+        
+        <div class="window-controls">
+            <div class="control-button minimize" title="ย่อหน้าต่าง">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5"/>
+                </svg>
+            </div>
+            <div class="control-button maximize" title="ขยายหน้าต่าง">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.5 10a.5.5 0 0 1-.5-.5V3H10.5a.5.5 0 0 1 0 1H4v5.5a.5.5 0 0 1-.5.5"/>
+                </svg>
+            </div>
+            <div class="control-button close" title="ปิดหน้าต่าง">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="avatar-area">
+            <img src="pic/pro.png" alt="Avatar" class="avatar-img">
+        </div>
+        <h1 class="username">Jaomaew </h1>
+        <p class="status-message">wanna be my friend?</p>
+        
+        <div class="social-links">
+            <a href="#" onclick="copyAndNotify('ns_w', 'discord-btn'); return false;" class="social-icon" id="discord-btn">
+                <i class="fab fa-discord"></i>
+            </a>
+            <a href="https://steamcommunity.com/profiles/76561199213076425/" target="_blank" class="social-icon">
+                <i class="fab fa-steam"></i>
+            </a>
+            <a href="https://www.roblox.com/th/users/1059905273/profile" target="_blank" class="social-icon">
+                <img src="pic/roblox.png" alt="Roblox" style="width: 24px; height: 24px;">
+            </a>
+            <a href="URL_TIKTOK_ของคุณ" target="_blank" class="social-icon">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+    </div>
+
+    <div id="close-popup-image" class="popup-image-overlay hidden">
+        <img src="pic/jmgreen.jpg" alt="Jumpscare Image" class="popup-image">
+    </div>
+
+    <script>
+        // --- ฟังก์ชันคัดลอก (Copy and Notify) ---
+        function copyAndNotify(text, buttonId) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.top = 0;
+            textarea.style.left = 0;
+            document.body.appendChild(textarea);
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {}).catch(err => {
+                    textarea.select();
+                    document.execCommand('copy');
+                });
+            } else {
+                textarea.select();
+                document.execCommand('copy');
+            }
+            document.body.removeChild(textarea);
+            
+            const button = document.getElementById(buttonId);
+            const existingTooltip = button.querySelector('.copy-tooltip');
+            if (existingTooltip) { existingTooltip.remove(); }
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'copy-tooltip';
+            tooltip.textContent = 'Copied! ' + text;
+            button.appendChild(tooltip);
+
+            setTimeout(() => {
+                if(tooltip.parentNode === button) {
+                    tooltip.remove();
+                }
+            }, 1500);
+        }
+
+        // --- ฟังก์ชันควบคุมเสียงและ Click to Enter ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('video-background');
+            const entryOverlay = document.getElementById('entry-overlay');
+            const enterButton = document.getElementById('enter-button');
+            const closeButton = document.querySelector('.control-button.close');
+            const popupImage = document.getElementById('close-popup-image');
+            const profileCard = document.querySelector('.profile-card');
+            const muteToggleBtn = document.getElementById('mute-toggle');
+            const volumeSlider = document.getElementById('volume-slider');
+            const volumeDisplay = document.getElementById('volume-display');
+
+            let currentVolume = 0.1; 
+            let lastVolume = currentVolume;
+            
+            if (video) { video.volume = currentVolume; video.muted = true; }
+
+            // ฟังก์ชันสำหรับอัพเดท UI เสียง
+            function updateVolumeDisplay() {
+                if (!video || !muteToggleBtn || !volumeDisplay) return;
+                
+                volumeDisplay.textContent = Math.round((video.volume || 0) * 100) + '%';
+                
+                if (video.muted || video.volume === 0) {
+                    muteToggleBtn.innerHTML = '<i class="fas fa-volume-off"></i>';
+                } else {
+                    muteToggleBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }
+            }
+
+
+            // --- LOGIC สำหรับ CLICK TO ENTER ---
+            if (enterButton) {
+                enterButton.addEventListener('click', () => {
+                    if (video) { video.play().catch(error => { console.error("Video Playback failed:", error); }); }
+                    if (video) { video.muted = false; video.volume = currentVolume; }
+                    
+                    if (entryOverlay) {
+                        entryOverlay.style.opacity = '0';
+                        setTimeout(() => { entryOverlay.style.display = 'none'; }, 500);
+                    }
+                    updateVolumeDisplay();
+                });
+            }
+            
+            // --- 🔑 LOGIC สำหรับปุ่มปิด (JUMP SCARE - หายไปใน 3 วินาที) ---
+            if (closeButton && popupImage) {
+                closeButton.addEventListener('click', () => {
+                    
+                    // 1. ซ่อน Profile Card 
+                    if (profileCard) {
+                        profileCard.style.opacity = '0';
+                        profileCard.style.transform = 'translateY(20px)';
+                    }
+
+                    // 2. แสดงรูปภาพ Pop-up
+                    popupImage.classList.remove('hidden');
+
+                    // (Optional) ถ้าคุณต้องการให้เสียงพื้นหลังเงียบลงทันที
+                    if (video) {
+                        video.muted = true; 
+                        video.volume = 0;
+                        updateVolumeDisplay();
+                    }
+                    
+                    // 3. ⚠️ ส่วนสำคัญ: ตั้งเวลาให้รูปภาพหายไปหลังจาก 3 วินาที
+                    setTimeout(() => {
+                        // เริ่มเอฟเฟกต์การจางหาย (ตาม CSS)
+                        popupImage.classList.add('fading-out');
+
+                        // ซ่อนองค์ประกอบจริงๆ หลังจาก Animation จบ (0.5 วินาที)
+                        setTimeout(() => {
+                            popupImage.classList.add('hidden');
+                            popupImage.classList.remove('fading-out');
+                        }, 500); 
+                    }, 3000); // 3000 มิลลิวินาที = 3 วินาที
+                });
+            }
+            
+            // --- 4. การควบคุมแถบเลื่อน (Slider) ---
+            if (volumeSlider && video) {
+                volumeSlider.addEventListener('input', (event) => {
+                    currentVolume = event.target.value / 100;
+                    
+                    if (currentVolume > 0) {
+                        video.volume = currentVolume;
+                        video.muted = false; 
+                        lastVolume = currentVolume;
+                    } else {
+                        video.volume = 0;
+                        video.muted = true; 
+                        lastVolume = 0.1;
+                    }
+                    updateVolumeDisplay();
+                });
+            }
+
+            // --- 5. การควบคุม Mute/Unmute ---
+            if (muteToggleBtn && video && volumeSlider) {
+                muteToggleBtn.addEventListener('click', () => {
+                    if (video.muted) {
+                        // Unmute
+                        if (lastVolume === 0 || lastVolume === undefined) {
+                            lastVolume = 0.1;
+                        }
+                        video.volume = lastVolume;
+                        video.muted = false;
+                        volumeSlider.value = lastVolume * 100; 
+                    } else {
+                        // Mute
+                        lastVolume = video.volume; 
+                        video.volume = 0;
+                        video.muted = true;
+                        volumeSlider.value = 0; 
+                    }
+                    updateVolumeDisplay();
+                });
+            }
+
+            updateVolumeDisplay();
+        });
+    </script>
+</body>
+</html>
